@@ -36,7 +36,7 @@ export class NewAppComponent implements OnInit {
   }
 
   addMenu(array){
-    
+
   }
 
   editMenu(array, element){
@@ -48,7 +48,12 @@ export class NewAppComponent implements OnInit {
   }
 
   deleteScreen(screen){
-
+    if(confirm("Are you sure you want to delete screen: " + screen.id + "")){
+      this.removeMenu(this.screens, screen);
+      if(this.screens.length == 0){
+        this.hasScreen = false;
+      }
+    }
   }
 
   removeMenu(array, element) {

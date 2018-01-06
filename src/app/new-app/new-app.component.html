@@ -1,0 +1,89 @@
+<div class="grid-x grid-margin-x">
+    <div class="cell auto">
+        <h4 class="">Hubtel Pos</h4>
+    </div>
+    <div class="cell shrink">
+        <button class="button" data-toggle="new-screen-pane">
+          <i class="fa fa-plus"></i>
+          Add Screen
+        </button>
+        <a class="button" routerLink="/apps">
+          <i class="fa fa-chevron-left"></i>
+          Back to Apps
+        </a>
+    </div>
+</div>
+
+<div class="grid-x grid-margin-x">
+    <div *ngIf="!hasScreen" class="cell auto" id="no-screen">
+        <p class="text-center p-t-100 gray">Add a screen to begin</p>
+    </div>
+      <div class="cell small-4" *ngFor="let screen of screens">
+        <div class="card-divider">
+            <p class="full-width">
+              {{screen.id}}
+              <i (click)="deleteScreen(screen)" class="float-right fa fa-times pointer"></i>
+            </p>
+        </div>
+        <div class="card-section">
+            <p *ngIf="screen.type=='Alert'">
+              Thank you, we will get back to you
+              <i (click)="editMessage(screen.message)" class="float-right fa fa-pencil"></i>
+            </p>
+            <p *ngIf="screen.type=='Menu'">
+              <b>Choose a Menu</b>
+              <i (click)="editMessage(screen.message)" class="float-right fa fa-pencil"></i>
+            </p>
+            <p *ngIf="screen.type=='Input'">
+              <b>Enter your Name</b>
+              <i (click)="editMessage(screen.message)" class="float-right fa fa-pencil"></i>
+            </p>
+            <div *ngIf="screen.type=='Menu'">
+                <div *ngFor="let m of screen.menu">{{m}}
+                  <i (click)="removeMenu(screen.menu, m)" class="float-right fa fa-minus-square-o"></i> 
+                  <i (click)="editMenu(screen.menu, m)" class="float-right fa fa-pencil"></i>&nbsp;
+                </div>
+                <span class="link" (click)="addMenu(screen.menu)">Add</span>
+            </div>
+            <hr class="p-t-30" *ngIf="screen.type=='Input' || screen.type=='Menu'" />
+            <br *ngIf="screen.type=='Menu'"/>
+            <div class="button-group tiny">
+              <button disabled *ngIf="screen.type=='Alert'" class="button hollow tiny" type="button">Ok</button>&nbsp;
+              <button disabled *ngIf="screen.type=='Menu' || screen.type=='Input'" class="button hollow tiny" type="button">Send</button>&nbsp;
+              <button disabled *ngIf="screen.type=='Menu' || screen.type=='Input'" class="button hollow tiny" type="button">Cancel</button>
+            </div>
+        </div>
+      </div>
+</div>
+
+
+<div class="dropdown-pane" id="new-screen-pane" data-dropdown data-auto-focus="true">
+    <form #heroForm="ngForm">
+      <div class="grid-x grid-margin-x">
+        <div class="cell">
+          <label>Screen Name
+            <input type="text" placeholder="Screen 1" 
+              id="screen-name" name="screen-name"
+              required [(ngModel)]="newScreen.id">
+          </label>
+        </div>
+        <div class="cell">
+          <label>Screen Type
+            <select
+                id="screen-type" name="screen-type"
+                required [(ngModel)]="newScreen.type">
+              <option></option>
+              <option *ngFor="let t of TYPES" [value]="t">{{t}}</option>
+            </select>
+          </label>
+        </div>
+        <div class="cell">
+          <button type="button" (click)="addScreen()" class="button">Continue</button>
+        </div>
+      </div>
+    </form>
+    <button data-close class="close-button" aria-label="Close alert" type="button">
+        <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+  

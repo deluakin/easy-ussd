@@ -14,7 +14,8 @@ export class NewAppComponent implements OnInit {
   TYPES: string[] = ["Menu", "Input", "Alert"];
   hasScreen: boolean = false;
   screens: UssdScreen[] = [];
-  newScreen: UssdScreen = new UssdScreen("", "", "");
+  appName: string = "Untitiled App";
+  newScreen: UssdScreen = new UssdScreen();
 
   ngOnInit() {
     $(document).foundation();
@@ -24,13 +25,32 @@ export class NewAppComponent implements OnInit {
     if(this.newScreen.id.length > 0 && this.newScreen.type.length > 0){
       var newScreen2 = {
         id: this.newScreen.id,
+        editMessage: false,
         type: this.newScreen.type,
-        message: '',
-        menu: ["1. first menu", "2. second menu"]
+        message: "",
+        menu: [{
+          text: '1. first option',
+          value: '1',
+        }, 
+        {
+          text: '2. second option',
+          value: '2',
+        }]
       };
+      switch(this.newScreen.type){
+        case "Menu":
+          newScreen2.message = "Choose a Menu";
+          break;
+        case "Input":
+          newScreen2.message = "Enter your Name";
+          break;
+        case "Alert":
+        newScreen2.message = "Thank you, we will get back to you";
+          break;
+      }
 
       this.screens.push(newScreen2);
-      this.newScreen = new UssdScreen("", "", "");
+      this.newScreen = new UssdScreen();
       this.hasScreen = true;
     }
   }
@@ -43,8 +63,12 @@ export class NewAppComponent implements OnInit {
 
   }
 
-  editMessage(message){
+  updateMessage(screen){
+    screen.editMessage = false;
+  }
 
+  initEditMessage(screen){
+    screen.editMessage = true;
   }
 
   deleteScreen(screen){

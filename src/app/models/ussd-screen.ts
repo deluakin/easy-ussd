@@ -8,7 +8,7 @@ export class UssdScreen {
     constructor(){ }
 }
 
-class UssdScreenMenu{
+export class UssdScreenMenu{
     public text: string = "";
     public value: string = "";
 }

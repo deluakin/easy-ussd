@@ -1,5 +1,5 @@
 import { Component, Renderer, OnInit } from '@angular/core';
-import { UssdScreen } from '../models/ussd-screen';
+import { UssdScreen, UssdScreenMenu } from '../models/ussd-screen';
 
 declare var $:any
 
@@ -16,6 +16,12 @@ export class NewAppComponent implements OnInit {
   screens: UssdScreen[] = [];
   appName: string = "Untitiled App";
   newScreen: UssdScreen = new UssdScreen();
+  selectedMenu: UssdScreenMenu = {
+    text: "",
+    value: ""
+  };
+  selectedScreen: UssdScreen;
+  selectedMenuIndex: number = -1;
 
   ngOnInit() {
     $(document).foundation();
@@ -55,12 +61,29 @@ export class NewAppComponent implements OnInit {
     }
   }
 
-  addMenu(array){
+  initEditMenu(screen, menu){
+    var editingMenu = {
+      text: (menu == null) ? "" : menu.text,
+      value: (menu == null) ? "" : menu.value,
+    };
+    this.selectedScreen = screen;
+    this.selectedMenu = editingMenu;
 
+    var menus = this.selectedScreen.menu
+    this.selectedMenuIndex = menus.indexOf(menu);
   }
 
-  editMenu(array, element){
-
+  updateMenu(){
+    if(this.selectedMenu.text.trim().length > 0 && this.selectedMenu.value.trim().length > 0){
+      $("#edit-ussd-menu").foundation("close");
+      if(this.selectedMenuIndex == -1){
+        //new menu
+        this.selectedScreen.menu.push(this.selectedMenu);
+      }else{
+        //update menu
+        this.selectedScreen.menu[this.selectedMenuIndex] = this.selectedMenu;
+      }
+    }
   }
 
   updateMessage(screen){

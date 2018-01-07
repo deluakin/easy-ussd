@@ -3,11 +3,15 @@
         <h4 class="">{{appName}}</h4>
     </div>
     <div class="cell shrink">
-        <button class="button" data-toggle="new-screen-pane">
+        <button class="hollow button primary small" *ngIf="hasScreen">
+            <i class="fa fa-globe"></i>
+            Publish App
+          </button>
+        <button class="hollow button success small" data-toggle="new-screen-pane">
           <i class="fa fa-plus"></i>
           Add Screen
         </button>
-        <a class="button" routerLink="/apps">
+        <a class="button small secondary" routerLink="/apps">
           <i class="fa fa-chevron-left"></i>
           Back to Apps
         </a>
@@ -59,9 +63,9 @@
                 <br/>
                 <div *ngFor="let m of screen.menu">{{m.text}}
                   <i (click)="removeMenu(screen.menu, m)" class="float-right fa fa-minus-square-o"></i> 
-                  <i (click)="editMenu(screen.menu, m)" class="float-right fa fa-pencil"></i>&nbsp;
+                  <i (click)="initEditMenu(screen, m)" data-open="edit-ussd-menu" class="float-right fa fa-pencil"></i>&nbsp;
                 </div>
-                <span class="link" (click)="addMenu(screen.menu)">Add</span>
+                <span class="link" data-open="edit-ussd-menu" (click)="initEditMenu(screen, null)">Add</span>
                 <hr class="p-t-30" />
             </div>
             <div *ngIf="screen.type=='Input'">
@@ -83,7 +87,7 @@
             
             <div class="button-group tiny float-right">
               <button disabled *ngIf="screen.type=='Alert'" class="button hollow tiny" type="button">Ok</button>
-              <button disabled *ngIf="screen.type=='Menu' || screen.type=='Input'" class="button hollow tiny" type="button">Send</button>&nbsp;
+              <button *ngIf="screen.type=='Menu' || screen.type=='Input'" class="button hollow tiny" type="button">Send</button>&nbsp;
               <button disabled *ngIf="screen.type=='Menu' || screen.type=='Input'" class="button hollow tiny" type="button">Cancel</button>
             </div>
         </div>
@@ -120,4 +124,35 @@
     <button data-close class="close-button" aria-label="Close alert" type="button">
         <span aria-hidden="true">&times;</span>
       </button>
+</div>
+
+
+<div class="reveal small" id="edit-ussd-menu" 
+    data-reveal>
+    <form #editMenuForm="ngForm">
+        <div class="grid-x grid-margin-x">
+          <div class="cell">
+            <label>Menu Text
+                <input type="text" 
+                id="menu-text" name="menu-text" 
+                [(ngModel)]="selectedMenu.text" 
+                required>
+            </label>
+          </div>
+          <div class="cell">
+              <label>Menu Value
+                <input type="text" 
+                  id="menu-value" name="menu-value" 
+                  [(ngModel)]="selectedMenu.value" 
+                  #name="ngModel" required>
+              </label>
+            </div>
+          <div class="cell">
+            <button type="button" (click)="updateMenu()" class="button">Continue</button>
+          </div>
+        </div>
+    </form>
+    <button class="close-button" data-close aria-label="Close modal" type="button">
+      <span aria-hidden="true">&times;</span>
+    </button>
 </div>

@@ -15,6 +15,7 @@ export class NewAppComponent implements OnInit {
   hasScreen: boolean = false;
   screens: UssdScreen[] = [];
   appName: string = "Untitiled App";
+  editAppName: boolean = false;
   newScreen: UssdScreen = new UssdScreen();
   selectedMenu: UssdScreenMenu = {
     text: "",
@@ -25,6 +26,14 @@ export class NewAppComponent implements OnInit {
 
   ngOnInit() {
     $(document).foundation();
+  }
+
+  initEditAppName(){
+    this.editAppName = true;
+  }
+
+  updatetAppName(){
+    this.editAppName = false;
   }
 
   addScreen(){

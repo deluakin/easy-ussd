@@ -1,6 +1,21 @@
 <div class="grid-x grid-margin-x">
     <div class="cell auto">
-        <h4 class="">{{appName}}</h4>
+        <h4 *ngIf="!editAppName">
+          <span>{{appName}}</span>
+          <small>
+            <i (click)="initEditAppName()" class="fa fa-pencil text-18"></i>
+          </small>
+        </h4>
+
+        <div *ngIf="editAppName" class="grid-x grid-margin-x">
+          <div class="cell large-6 input-group">
+              <input  type="text" id="app-name" name="app-name"
+                required [(ngModel)]="appName">
+              <div class="input-group-button">
+                  <i *ngIf="editAppName" (click)="updatetAppName()" class="fa fa-check p-10 pointer text-18 gray"></i>
+              </div>
+          </div>
+        </div>
     </div>
     <div class="cell shrink">
         <button class="hollow button primary small" *ngIf="hasScreen">

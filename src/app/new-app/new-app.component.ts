@@ -12,6 +12,10 @@ export class NewAppComponent implements OnInit {
 
   constructor(private renderer: Renderer) { }
   TYPES: string[] = ["Menu", "Input", "Alert"];
+  USSD_INSTRUCTION: string[] = ["Goto Screen", 
+                                "Send a message", 
+                                "Tigger Mobile Money request",
+                                "Make a REST call"];
   hasScreen: boolean = false;
   screens: UssdScreen[] = [];
   appName: string = "Untitiled App";

@@ -37,7 +37,7 @@
     <div *ngIf="!hasScreen" class="cell auto" id="no-screen">
         <p class="text-center p-t-100 gray">Add a screen to begin</p>
     </div>
-      <div class="cell small-6 large-4 p-t-20" *ngFor="let screen of screens">
+      <div class="cell small-6 large-4 p-t-20 p-b-20 bg-gray" *ngFor="let screen of screens">
         <div class="card-divider">
             <p class="full-width">
               {{screen.id}}
@@ -102,7 +102,7 @@
             
             <div class="button-group tiny float-right">
               <button disabled *ngIf="screen.type=='Alert'" class="button hollow tiny" type="button">Ok</button>
-              <button *ngIf="screen.type=='Menu' || screen.type=='Input'" class="button hollow tiny" type="button">Send</button>&nbsp;
+              <button *ngIf="screen.type=='Menu' || screen.type=='Input'" data-open="set-ussd-action" class="button hollow tiny" type="button">Send</button>&nbsp;
               <button disabled *ngIf="screen.type=='Menu' || screen.type=='Input'" class="button hollow tiny" type="button">Cancel</button>
             </div>
         </div>
@@ -164,6 +164,28 @@
             </div>
           <div class="cell">
             <button type="button" (click)="updateMenu()" class="button">Continue</button>
+          </div>
+        </div>
+    </form>
+    <button class="close-button" data-close aria-label="Close modal" type="button">
+      <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+
+<div class="reveal" id="set-ussd-action" 
+    data-reveal>
+    <form #ussdActionForm="ngForm">
+        <p><b>Set instructions</b></p>
+        <div class="grid-x grid-margin-x">
+          <div class="cell" *ngFor="let r of USSD_INSTRUCTION">
+            <label>
+                <input type="checkbox" />
+                {{r}}
+            </label>
+          </div>
+          <div class="cell">
+            <button type="button" class="button">Continue</button>
           </div>
         </div>
     </form>

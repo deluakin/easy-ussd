@@ -1,5 +1,7 @@
 import { Component, Renderer, OnInit } from '@angular/core';
 import { UssdScreen, UssdScreenMenu } from '../models/ussd-screen';
+import * as firebase from "firebase";
+import {FirebaseConfig} from '../../environments/firebase.config'
 
 declare var $:any
 

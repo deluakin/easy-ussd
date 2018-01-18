@@ -6,11 +6,13 @@ import { NewAppComponent } from './new-app/new-app.component';
 import { DeleteAppComponent } from './delete-app/delete-app.component';
 
 const routes: Routes = [
+  { path: '', redirectTo: '/apps', pathMatch: 'full' },
   { path: 'apps', component: AppsComponent },
   { path: 'apps/new', component: NewAppComponent },
   { path: 'apps/delete', component: DeleteAppComponent },
-  { path: '', redirectTo: '/apps', pathMatch: 'full' }
+
 ];
+
 
 @NgModule({
   imports:  [ RouterModule.forRoot(routes) ],
@@ -18,6 +20,5 @@ const routes: Routes = [
     RouterModule
   ]
 })
-
 
 export class AppRoutingModule { }

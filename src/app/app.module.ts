@@ -8,6 +8,11 @@ import { AppsComponent } from './apps/apps.component';
 import { DeleteAppComponent } from './delete-app/delete-app.component';
 import { AppRoutingModule } from './/app-routing.module';
 
+import {FirebaseConfig} from '../environments/environment'
+import {AngularFireModule} from 'angularfire2'
+import {AngularFirestoreModule} from 'angularfire2/firestore'
+
+import { UssdAppService } from './service/ussd-app.service';
 
 @NgModule({
   declarations: [
@@ -19,9 +24,11 @@ import { AppRoutingModule } from './/app-routing.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    AngularFireModule.initializeApp(FirebaseConfig.firestore),
+    AngularFirestoreModule
   ],
-  providers: [],
+  providers: [UssdAppService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

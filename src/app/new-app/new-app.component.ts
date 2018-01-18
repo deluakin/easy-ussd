@@ -1,8 +1,7 @@
 import { Component, Renderer, OnInit } from '@angular/core';
-import { UssdScreen, UssdScreenMenu } from '../models/ussd-screen';
-import * as firebase from "firebase";
-import {FirebaseConfig} from '../../environments/firebase.config'
-
+import { UssdScreen, UssdApp, UssdScreenMenu } from '../models/ussd-screen';
+import {UssdAppService} from '../service/ussd-app.service';
+ 
 declare var $:any
 
 @Component({
@@ -12,13 +11,20 @@ declare var $:any
 })
 export class NewAppComponent implements OnInit {
 
-  constructor(private renderer: Renderer) { }
+  newApp: UssdApp = { 
+    Status: "Pending",
+    Created: new Date(),
+    Endpoint: "http://goo.gl/xLdK03",
+  };
+
   TYPES: string[] = ["Menu", "Input", "Alert"];
   USSD_INSTRUCTION: string[] = ["Goto Screen", 
                                 "Send a message", 
                                 "Tigger Mobile Money request",
                                 "Make a REST call"];
+                                
   hasScreen: boolean = false;
+  isEdit: boolean = false;
   screens: UssdScreen[] = [];
   appName: string = "Untitiled App";
   editAppName: boolean = false;
@@ -29,6 +35,8 @@ export class NewAppComponent implements OnInit {
   };
   selectedScreen: UssdScreen;
   selectedMenuIndex: number = -1;
+
+  constructor(private ussdAppService: UssdAppService) { }
 
   ngOnInit() {
     $(document).foundation();
@@ -121,5 +129,16 @@ export class NewAppComponent implements OnInit {
   removeMenu(array, element) {
     const index = array.indexOf(element);
     array.splice(index, 1);
+  }
+
+  saveApp(){
+    this.newApp.Name = this.appName;
+    this.newApp.Screens = this.screens;
+    if(this.isEdit){
+      this.ussdAppService.updateApp(this.newApp);
+    }else{
+      this.ussdAppService.addApp(this.newApp);
+    }
+    this.isEdit = true;
   }
 }

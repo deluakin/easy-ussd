@@ -12,19 +12,19 @@
       <tr>
         <th>App Name</th>
         <th>Status</th>
-        <th>USSD</th>
+        <th>Endpoint</th>
         <th>Created</th>
         <th></th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>Hubtel POS</td>
-        <td>Publish</td>
-        <td><b>*173*7079#</b></td>
-        <td>12th Dec, 2017</td>
+      <tr *ngFor="let app of ussdApps">
+        <td>{{app.Name}}</td>
+        <td>{{app.Status}}</td>
+        <td><b>{{app.Endpoint}}</b></td>
+        <td>{{app.Created | date}}</td>
         <td>
-          <a href="" class="hollow button secondary tiny">
+          <a href="" class="button secondary tiny">
             <i class="fa fa-pencil"></i>
             Edit
           </a> 

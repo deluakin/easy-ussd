@@ -18,9 +18,9 @@
         </div>
     </div>
     <div class="cell shrink">
-        <button class="hollow button primary small" *ngIf="hasScreen">
+        <button class="hollow button primary small" *ngIf="hasScreen" (click)="saveApp()">
             <i class="fa fa-globe"></i>
-            Publish App
+            Save App
           </button>
         <button class="hollow button success small" data-toggle="new-screen-pane">
           <i class="fa fa-plus"></i>

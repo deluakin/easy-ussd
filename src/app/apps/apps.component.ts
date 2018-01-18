@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {UssdAppService} from '../service/ussd-app.service';
+import { UssdApp } from '../models/ussd-screen';
 
 @Component({
   selector: 'app-apps',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppsComponent implements OnInit {
 
-  constructor() { }
+  ussdApps: UssdApp[];
+  constructor(private ussdAppService: UssdAppService) { }
 
   ngOnInit() {
+    this.ussdAppService.getApps().subscribe(apps => {
+      this.ussdApps = apps;
+    });
   }
 
 }

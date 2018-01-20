@@ -12,6 +12,8 @@ export class UssdAppService {
   ussdAppsCollection: AngularFirestoreCollection<UssdApp>;
   ussdApps: Observable<UssdApp[]>;
   ussdAppDoc: AngularFirestoreDocument<UssdApp>;
+  ussdApp: Observable<UssdApp>;
+  appId: string;
 
   constructor(private afs: AngularFirestore) {
     this.ussdAppsCollection = this.afs.collection("ussdApps");
@@ -19,6 +21,7 @@ export class UssdAppService {
       return changes.map(a => {
         const data = a.payload.doc.data() as UssdApp;
         data.Id = a.payload.doc.id;
+        this.appId = a.payload.doc.id;
         return data;
       })
     });
@@ -28,12 +31,19 @@ export class UssdAppService {
      return this.ussdApps;
    }
 
-   addApp(app: UssdApp){
-     this.ussdAppsCollection.add(app);
+   getAppById(id: string){
+     this.ussdAppDoc = this.afs.doc("ussdApps/" + id);
+     this.ussdApp = this.ussdAppDoc.valueChanges(); 
+     return this.ussdApp;
    }
 
-   updateApp(app: UssdApp){
-     this.ussdAppDoc = this.afs.doc(`ussdApps/${app.Id}`);
+   addApp(app: UssdApp){
+     this.ussdAppsCollection.add(app);
+     return this.appId;
+   }
+
+   updateApp(app: UssdApp, id: string){
+     this.ussdAppDoc = this.afs.doc(`ussdApps/${id}`);
      this.ussdAppDoc.update(app);
   }
 

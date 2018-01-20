@@ -9,6 +9,7 @@ const routes: Routes = [
   { path: '', redirectTo: '/apps', pathMatch: 'full' },
   { path: 'apps', component: AppsComponent },
   { path: 'apps/new', component: NewAppComponent },
+  { path: 'apps/new/:id', component: NewAppComponent },
   { path: 'apps/delete', component: DeleteAppComponent },
 
 ];

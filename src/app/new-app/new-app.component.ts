@@ -1,6 +1,7 @@
 import { Component, Renderer, OnInit } from '@angular/core';
 import { UssdScreen, UssdApp, UssdScreenMenu } from '../models/ussd-screen';
 import {UssdAppService} from '../service/ussd-app.service';
+import { ActivatedRoute } from '@angular/router';
  
 declare var $:any
 
@@ -11,6 +12,7 @@ declare var $:any
 })
 export class NewAppComponent implements OnInit {
 
+  ussdAppId: string;
   newApp: UssdApp = { 
     Status: "Pending",
     Created: new Date(),
@@ -35,11 +37,29 @@ export class NewAppComponent implements OnInit {
   };
   selectedScreen: UssdScreen;
   selectedMenuIndex: number = -1;
+  private sub: any;
 
-  constructor(private ussdAppService: UssdAppService) { }
+  constructor(private route: ActivatedRoute, private ussdAppService: UssdAppService) {
+  }
 
   ngOnInit() {
+    this.ussdAppId = this.route.snapshot.params['id'];
+    if(this.ussdAppId !== undefined){
+      this.loadSavedApp(this.ussdAppId);
+    }
     $(document).foundation();
+  }
+
+  loadSavedApp(ussdAppId: string){
+    var appData = this.ussdAppService.getAppById(ussdAppId);
+    appData.subscribe(app => {
+      this.appName = app.Name;
+      this.screens = app.Screens;
+      if(this.screens.length > 0){
+        this.hasScreen = true;
+      }
+    });
+    this.isEdit = true;
   }
 
   initEditAppName(){
@@ -135,9 +155,9 @@ export class NewAppComponent implements OnInit {
     this.newApp.Name = this.appName;
     this.newApp.Screens = this.screens;
     if(this.isEdit){
-      this.ussdAppService.updateApp(this.newApp);
+      this.ussdAppService.updateApp(this.newApp, this.ussdAppId);
     }else{
-      this.ussdAppService.addApp(this.newApp);
+      this.ussdAppId = this.ussdAppService.addApp(this.newApp);
     }
     this.isEdit = true;
   }

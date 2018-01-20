@@ -24,15 +24,18 @@
         <td><b>{{app.Endpoint}}</b></td>
         <td>{{app.Created | date}}</td>
         <td>
-          <a href="" class="button secondary tiny">
+          <a routerLink="/apps/new/{{app.Id}}" class="button secondary tiny">
             <i class="fa fa-pencil"></i>
             Edit
           </a> 
-          <a href="" class="hollow button secondary tiny">
+          <a routerLink="/apps/unpublish/{{app.Id}}" class="hollow button secondary tiny">
               <i class="fa fa-power-off"></i>
               Unpublish
           </a> 
         </td>
+      </tr>
+      <tr *ngIf="ussdApps == undefined || ussdApps.length == 0">
+          <td colspan="5">No app yet</td>
       </tr>
     </tbody>
   </table>  

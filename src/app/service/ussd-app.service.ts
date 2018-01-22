@@ -21,7 +21,6 @@ export class UssdAppService {
       return changes.map(a => {
         const data = a.payload.doc.data() as UssdApp;
         data.Id = a.payload.doc.id;
-        this.appId = a.payload.doc.id;
         return data;
       })
     });
@@ -38,8 +37,9 @@ export class UssdAppService {
    }
 
    addApp(app: UssdApp){
-     this.ussdAppsCollection.add(app);
-     return this.appId;
+    this.appId = this.afs.createId();
+    this.ussdAppsCollection.doc(this.appId).set(app);
+    return this.appId;
    }
 
    updateApp(app: UssdApp, id: string){

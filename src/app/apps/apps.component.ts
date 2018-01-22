@@ -22,7 +22,8 @@ export class AppsComponent implements OnInit, OnDestroy  {
       });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(){
+    console.log("Hello");
   }
 
 }

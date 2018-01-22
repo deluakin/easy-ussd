@@ -1,0 +1,70 @@
+<html>
+<head>
+<script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+</head>
+<body>
+<h3>Branches</h3>
+<div>
+<p>
+Ecobank Ghana - New Town Branch<br/>
+<small>New Town Rd - 030000000 </small> <br/>
+<small><a href="javascript:getDirection('new town, accra')">Get Direction</a></small>
+</p>
+
+<p>
+Ecobank Ghana - Madina Branch<br/>
+<small>Madina - 030000000 </small> <br/>
+<small><a href="javascript:getDirection('madina')">Get Direction</a></small>
+</p>
+
+<p>
+Ecobank Ghana - Osu Branch<br/>
+<small>New Town Rd - 030000000 </small> <br/>
+<small><a href="javascript:getDirection('osu')">Get Direction</a></small>
+</p>
+</div>
+
+<p id="address" style="color:red"></p>
+
+<iframe id="directionMap" src="" 
+	width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+
+<script>
+var mapLocation = "";
+var address = document.getElementById("address");
+var mapIframe = document.getElementById("directionMap");
+function getDirection(directionTo) {
+	address.innerHTML = "Processing...";
+	mapLocation = "https://www.google.com/maps/embed/v1/directions?key=AIzaSyAHLUcbi0ebmj6czOSDN5TjxqeoqcA4ZhE&origin=XXXXX&destination=" + directionTo + "&avoid=tolls|highways";
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else { 
+        address.innerHTML = "Geolocation is not supported by this browser.";
+    }
+}
+
+function showPosition(position) {
+    var latitude = position.coords.latitude;
+    var longitude = position.coords.longitude;
+    var geocoder = new google.maps.Geocoder();
+    var latLng = new google.maps.LatLng(latitude, longitude);
+
+	if (geocoder) {
+		geocoder.geocode({ 'latLng': latLng}, function (results, status) {
+		   if (status == google.maps.GeocoderStatus.OK) {
+			 address.innerHTML = "Current Address: "+results[0].formatted_address;
+			 mapLocation = mapLocation.replace("XXXXX", results[0].formatted_address);
+			 mapIframe.src = mapLocation;
+		   }
+		   else {
+			address.innerHTML = "Geocoding failed: "+status;
+		   }
+		});
+	 } else{
+		address.innerHTML = "Failed";
+	}     
+}
+</script>
+
+</body>
+</html>

@@ -9,7 +9,7 @@ import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
   templateUrl: './apps.component.html',
   styleUrls: ['./apps.component.sass']
 })
-export class AppsComponent implements OnInit, OnDestroy  {
+export class AppsComponent implements OnInit  {
 
   ussdApps: UssdApp[];
   appsSubscriber: Observable<UssdApp[]>;
@@ -20,10 +20,6 @@ export class AppsComponent implements OnInit, OnDestroy  {
       .subscribe(apps => {
         this.ussdApps = apps;
       });
-  }
-
-  ngOnDestroy(){
-    console.log("Hello");
   }
 
 }

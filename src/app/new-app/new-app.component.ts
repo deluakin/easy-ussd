@@ -47,6 +47,7 @@ export class NewAppComponent implements OnInit {
     if(this.ussdAppId !== undefined){
       this.loadSavedApp(this.ussdAppId);
     }
+    $(document).foundation();
   }
 
   loadSavedApp(ussdAppId: string){

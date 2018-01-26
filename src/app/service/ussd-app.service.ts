@@ -16,7 +16,9 @@ export class UssdAppService {
   appId: string;
 
   constructor(private afs: AngularFirestore) {
-    this.ussdAppsCollection = this.afs.collection("ussdApps");
+    this.ussdAppsCollection = this.afs.collection("ussdApps", ref => {
+      return ref.orderBy('Created', 'desc');
+    });
     this.ussdApps = this.ussdAppsCollection.snapshotChanges().map(changes => {
       return changes.map(a => {
         const data = a.payload.doc.data() as UssdApp;

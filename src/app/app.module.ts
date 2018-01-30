@@ -13,13 +13,15 @@ import {AngularFireModule} from 'angularfire2'
 import {AngularFirestoreModule} from 'angularfire2/firestore'
 
 import { UssdAppService } from './service/ussd-app.service';
+import { LoadingComponent } from './loading/loading.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NewAppComponent,
     AppsComponent,
-    DeleteAppComponent
+    DeleteAppComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,

@@ -14,18 +14,30 @@ export class AppsComponent implements OnInit, OnDestroy  {
 
   ussdSubscriber: Subscription;
   ussdApps: UssdApp[];
+  Loader: LoaderConfig;
   appsSubscriber: Observable<UssdApp[]>;
   constructor(private ussdAppService: UssdAppService) { }
 
   ngOnInit() {
+    this.Loader = {
+      show: true,
+      title: "Loading...please wait"
+    };
     this.ussdSubscriber = this.ussdAppService.getApps()
       .subscribe(apps => {
         this.ussdApps = apps;
+        this.Loader.show = false;
       });
   }
 
   ngOnDestroy() {
     this.ussdSubscriber.unsubscribe();
+    console.log("Destroyed");
   }
 
+}
+
+interface LoaderConfig {
+  show: boolean,
+  title: string
 }

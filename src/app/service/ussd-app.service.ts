@@ -48,7 +48,4 @@ export class UssdAppService {
      this.ussdAppDoc = this.afs.doc(`ussdApps/${id}`);
      this.ussdAppDoc.update(app);
   }
-
 }
-
-

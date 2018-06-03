@@ -4,6 +4,7 @@ import { UssdApp } from '../models/ussd-screen';
 import { Observable } from 'rxjs/Observable';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import { Subscription } from 'rxjs/Subscription';
+import { MessageService } from '../service/message.service';
 
 @Component({
   selector: 'app-apps',
@@ -14,30 +15,29 @@ export class AppsComponent implements OnInit, OnDestroy  {
 
   ussdSubscriber: Subscription;
   ussdApps: UssdApp[];
-  Loader: LoaderConfig;
   appsSubscriber: Observable<UssdApp[]>;
-  constructor(private ussdAppService: UssdAppService) { }
+  constructor(private ussdAppService: UssdAppService, 
+    public messageService: MessageService) { 
+      this.messageService.showMessage("Loading apps...");
+    }
 
   ngOnInit() {
-    this.Loader = {
-      show: true,
-      title: "Loading...please wait"
-    };
     this.ussdSubscriber = this.ussdAppService.getApps()
       .subscribe(apps => {
         this.ussdApps = apps;
-        this.Loader.show = false;
+        this.messageService.hideMessage();
       });
   }
 
   ngOnDestroy() {
     this.ussdSubscriber.unsubscribe();
-    console.log("Destroyed");
   }
 
-}
+  deleteApp(appId){
+    this.messageService.showMessage("Deleting...");
+    this.ussdAppService.deleteApp(appId);
+    this.messageService.showMessage("Deleted");
+    this.messageService.hideMessage();
+  }
 
-interface LoaderConfig {
-  show: boolean,
-  title: string
 }

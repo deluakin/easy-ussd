@@ -13,6 +13,7 @@ import {AngularFireModule} from 'angularfire2'
 import {AngularFirestoreModule} from 'angularfire2/firestore'
 
 import { UssdAppService } from './service/ussd-app.service';
+import { MessageService } from './service/message.service';
 import { LoadingComponent } from './loading/loading.component';
 
 @NgModule({
@@ -30,7 +31,7 @@ import { LoadingComponent } from './loading/loading.component';
     AngularFireModule.initializeApp(FirebaseConfig.firestore),
     AngularFirestoreModule
   ],
-  providers: [UssdAppService],
+  providers: [UssdAppService, MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

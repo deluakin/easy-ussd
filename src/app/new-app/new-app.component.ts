@@ -2,6 +2,8 @@ import { Component, Renderer, OnInit } from '@angular/core';
 import { UssdScreen, UssdApp, UssdScreenMenu } from '../models/ussd-screen';
 import {UssdAppService} from '../service/ussd-app.service';
 import { ActivatedRoute } from '@angular/router';
+import { MessageService } from '../service/message.service';
+import { Observable } from 'rxjs/Observable';
  
 declare var $:any
 
@@ -18,6 +20,8 @@ export class NewAppComponent implements OnInit {
     Created: new Date(),
     Endpoint: "http://goo.gl/xLdK03",
   };
+
+  JustUpdate: boolean = false;
 
   TYPES: string[] = ["Menu", "Input", "Alert"];
   USSD_INSTRUCTION: string[] = ["Goto Screen", 
@@ -39,13 +43,18 @@ export class NewAppComponent implements OnInit {
   selectedMenuIndex: number = -1;
   private sub: any;
 
-  constructor(private route: ActivatedRoute, private ussdAppService: UssdAppService) {
+  constructor(private route: ActivatedRoute, 
+    private ussdAppService: UssdAppService,
+    public messageService: MessageService) {
+      this.messageService.showMessage("Loading...");
   }
 
   ngOnInit() {
     this.ussdAppId = this.route.snapshot.params['id'];
     if(this.ussdAppId !== undefined){
       this.loadSavedApp(this.ussdAppId);
+    }else{
+      this.messageService.hideMessage();
     }
     $(document).foundation();
   }
@@ -58,7 +67,10 @@ export class NewAppComponent implements OnInit {
       if(this.screens.length > 0){
         this.hasScreen = true;
       }
-    });
+      if(!this.JustUpdate)
+        this.messageService.hideMessage();
+    }, error => console.log(error)
+    );
     this.isEdit = true;
   }
 
@@ -152,6 +164,7 @@ export class NewAppComponent implements OnInit {
   }
 
   saveApp(){
+    this.messageService.showMessage("Saving...");
     this.newApp.Name = this.appName;
     this.newApp.Screens = this.screens;
     if(this.isEdit){
@@ -159,6 +172,10 @@ export class NewAppComponent implements OnInit {
     }else{
       this.ussdAppId = this.ussdAppService.addApp(this.newApp);
     }
+    this.messageService.showMessage("Saved");
     this.isEdit = true;
+    this.JustUpdate = true;
+
+    this.messageService.hideMessage();
   }
 }

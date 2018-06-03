@@ -34,7 +34,7 @@ export class UssdAppService {
 
    getAppById(id: string){
      this.ussdAppDoc = this.afs.doc("ussdApps/" + id);
-     this.ussdApp = this.ussdAppDoc.valueChanges(); 
+     this.ussdApp = this.ussdAppDoc.valueChanges();
      return this.ussdApp;
    }
 
@@ -48,4 +48,9 @@ export class UssdAppService {
      this.ussdAppDoc = this.afs.doc(`ussdApps/${id}`);
      this.ussdAppDoc.update(app);
   }
+
+  deleteApp(id: string){
+    this.ussdAppDoc = this.afs.doc(`ussdApps/${id}`);
+    this.ussdAppDoc.delete();
+ }
 }

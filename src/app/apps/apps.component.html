@@ -32,14 +32,15 @@
               <i class="fa fa-power-off"></i>
               Unpublish
           </a> 
+          <button (click)="deleteApp(app.Id)" class="hollow button alert tiny">
+            <i class="fa fa-remove"></i>
+            Delete
+          </button> 
         </td>
       </tr>
-      <tr *ngIf="ussdApps == undefined || ussdApps.length == 0">
-          <td colspan="5" *ngIf="!Loader.show">No app yet</td>
+      <tr>
+          <td colspan="5" *ngIf="!messageService.isMessageShowing()">No app yet</td>
       </tr>
     </tbody>
   </table>  
 </div>
-
-
-<app-loading *ngIf="Loader.show" [Config]="Loader"></app-loading>

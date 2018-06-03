@@ -10,7 +10,7 @@ const routes: Routes = [
   { path: 'apps', component: AppsComponent },
   { path: 'apps/new', component: NewAppComponent },
   { path: 'apps/new/:id', component: NewAppComponent },
-  { path: 'apps/delete', component: DeleteAppComponent },
+  { path: 'apps/delete/:id', component: DeleteAppComponent },
 
 ];
 

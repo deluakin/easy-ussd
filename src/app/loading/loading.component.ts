@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import {MessageService} from '../service/message.service';
 
 @Component({
   selector: 'app-loading',
@@ -8,7 +9,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class LoadingComponent implements OnInit {
 
   @Input() Config;
-  constructor() { }
+  constructor(public messageService: MessageService) { }
 
   ngOnInit() {
   }

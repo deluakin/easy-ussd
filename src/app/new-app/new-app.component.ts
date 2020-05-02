@@ -1,4 +1,4 @@
-import { Component, Renderer, OnInit } from '@angular/core';
+import { Component, Renderer2, OnInit } from '@angular/core';
 import { UssdScreen, UssdApp, UssdScreenMenu } from '../models/ussd-screen';
 import {UssdAppService} from '../service/ussd-app.service';
 import { ActivatedRoute } from '@angular/router';

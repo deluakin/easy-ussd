@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {UssdAppService} from '../service/ussd-app.service';
 import { UssdApp } from '../models/ussd-screen';
 import { Observable } from 'rxjs/Observable';
-import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
+import { OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { MessageService } from '../service/message.service';
 

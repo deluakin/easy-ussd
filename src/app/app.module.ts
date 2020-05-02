@@ -9,12 +9,13 @@ import { DeleteAppComponent } from './delete-app/delete-app.component';
 import { AppRoutingModule } from './/app-routing.module';
 
 import {FirebaseConfig} from '../environments/environment'
-import {AngularFireModule} from 'angularfire2'
-import {AngularFirestoreModule} from 'angularfire2/firestore'
+import {AngularFireModule} from '@angular/fire'
+import {AngularFirestoreModule} from '@angular/fire/firestore'
 
 import { UssdAppService } from './service/ussd-app.service';
 import { MessageService } from './service/message.service';
 import { LoadingComponent } from './loading/loading.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { LoadingComponent } from './loading/loading.component';
     AppRoutingModule,
     FormsModule,
     AngularFireModule.initializeApp(FirebaseConfig.firestore),
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    FontAwesomeModule
   ],
   providers: [UssdAppService, MessageService],
   bootstrap: [AppComponent]

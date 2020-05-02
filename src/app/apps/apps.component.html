@@ -22,20 +22,20 @@
         <td>{{app.Name}}</td>
         <td>{{app.Status}}</td>
         <td><b>{{app.Endpoint}}</b></td>
-        <td>{{app.Created | date}}</td>
+        <td>{{app.Created.seconds * 1000 | date}}</td>
         <td>
           <a routerLink="/apps/new/{{app.Id}}" class="button secondary tiny">
-            <i class="fa fa-pencil"></i>
+            <i class="fa fa-edit"></i>
             Edit
           </a> 
           <a routerLink="/apps/unpublish/{{app.Id}}" class="hollow button secondary tiny">
               <i class="fa fa-power-off"></i>
               Unpublish
           </a> 
-          <button (click)="deleteApp(app.Id)" class="hollow button alert tiny">
+          <!-- <button (click)="deleteApp(app.Id)" class="hollow button alert tiny">
             <i class="fa fa-remove"></i>
             Delete
-          </button> 
+          </button>  -->
         </td>
       </tr>
       <tr>
